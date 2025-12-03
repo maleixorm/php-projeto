@@ -8,7 +8,13 @@
         $email = $_POST['email'];
         $telefone = $_POST['telefone'];
         $nascimento = $_POST['nascimento'];
-
+        $senha_descriptografada = $_POST['senha'];
+        
+        if (strlen($senha_descriptografada) < 6 && strlen($senha_descriptografada) > 16) {
+            $erro = "A senha deve ter entre 6 e 16 caracteres";
+        }
+        
+        
         if(empty($nome)) {
             $erro = "Preencha o nome!";
         }
@@ -16,7 +22,7 @@
         if(empty($email) || !filter_var($email, FILTER_SANITIZE_EMAIL)) {
             $erro = "Preencha com um e-mail válido!";
         }
-
+        
         if(!empty($nascimento)) {
             if(strlen($nascimento) == 10) {
                 $nascimento = (string)$nascimento;
@@ -24,18 +30,19 @@
                 $erro = "A data de nascimento deve seguir o padrão dia/mes/ano.";
             }
         }
-
+        
         if (!empty($telefone)) {
             $telefone = filter_var($telefone, FILTER_SANITIZE_NUMBER_INT);
             if (strlen($telefone) != 11) {
                 $erro = "O telefone deve seguir o padrão (xx) 999999999.";
             }
         }
-
+        
         if ($erro) {
             echo "<p><b>Erro: $erro</b></p>";
         } else {
-            $sql = "INSERT INTO clientes (nome, email, telefone, nascimento, data) VALUES ('$nome', '$email', '$telefone', '$nascimento', NOW())";
+            $senha = password_hash($senha_descriptografada, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO clientes (nome, email, senha, telefone, nascimento, data) VALUES ('$nome', '$email', '$senha','$telefone', '$nascimento', NOW())";
             $deu_certo = $mysqli->query($sql) or die($mysqli->error);
             if($deu_certo) {
                 echo "<p><b>Cliente cadastrado com sucesso!</b></p>";
@@ -71,6 +78,10 @@
             <div class="form-control">
                 <label for="nascimento">Data de Nascimento: </label>
                 <input type="date" name="nascimento" id="" value="<?php if(isset($_POST['nascimento'])) echo $_POST['nascimento']; ?>">
+            </div>
+            <div class="form-control">
+                <label for="senha">Senha: </label>
+                <input type="password" name="senha" id="" value="<?php if(isset($_POST['senha'])) echo $_POST['senha']; ?>">
             </div>
             <input type="submit" value="Cadastrar">
         </form>
