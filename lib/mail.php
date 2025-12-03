@@ -25,14 +25,13 @@ function enviar_email ($destinatario, $assunto, $mensagemHTML) {
         $mail->CharSet    = 'UTF-8';                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('from@example.com', 'Mailer');
-        $mail->addAddress('joe@example.net', 'Joe User');     //Add a recipient
+        $mail->setFrom('admin@teste.com', 'Administrador do Sistema');
+        $mail->addAddress($destinatario);     //Add a recipient
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Here is the subject';
-        $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->Subject = $assunto;
+        $mail->Body    = $mensagemHTML;
 
         $mail->send();
         echo 'Message has been sent';
