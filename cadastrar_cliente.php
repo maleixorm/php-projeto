@@ -2,6 +2,8 @@
     if(count($_POST) > 0) {
 
         include('conexao.php');
+        include('lib/mail.php');
+
         $erro = false;
         
         $nome = $_POST['nome'];
@@ -45,6 +47,14 @@
             $sql = "INSERT INTO clientes (nome, email, senha, telefone, nascimento, data) VALUES ('$nome', '$email', '$senha','$telefone', '$nascimento', NOW())";
             $deu_certo = $mysqli->query($sql) or die($mysqli->error);
             if($deu_certo) {
+                enviar_email($email, "Conta criada no site.", "
+                <h1>Parabéns!</h1>
+                <p>Sua conta foi criada com sucesso!</p>
+                <p>
+                    <strong>Login: </strong> $email<br>
+                    <strong>Senha: </strong> $senha_descriptografada
+                </p>
+                ");
                 echo "<p><b>Cliente cadastrado com sucesso!</b></p>";
                 unset($_POST);
             }
