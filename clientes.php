@@ -1,5 +1,5 @@
 <?php 
-    include('conexao.php');
+    include('lib/conexao.php');
     $sql = "SELECT * FROM clientes";
     $query_clientes = $mysqli->query($sql) or die($mysqli->error);
     $num_clientes = $query_clientes->num_rows;

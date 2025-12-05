@@ -1,5 +1,5 @@
 <?php
-    include('conexao.php');
+    include('lib/conexao.php');
     if (isset($_POST['confirmar'])) {
         $id = intval($_GET['id']);
         $sql = "DELETE FROM clientes WHERE id = '$id'";

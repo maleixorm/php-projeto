@@ -1,7 +1,7 @@
 <?php 
     
-    include('conexao.php');
-    include('functions.php');
+    include('lib/conexao.php');
+    include('lib/functions.php');
 
     $id = intval($_GET['id']);
     
