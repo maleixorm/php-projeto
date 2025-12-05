@@ -93,6 +93,10 @@
                 <label for="senha">Senha: </label>
                 <input type="password" name="senha" id="" value="<?php if(isset($_POST['senha'])) echo $_POST['senha']; ?>">
             </div>
+            <div class="form-control">
+                <label for="foto">Foto do Usuário: </label>
+                <input type="file" name="foto">
+            </div>
             <input type="submit" value="Cadastrar">
         </form>
     </main>
