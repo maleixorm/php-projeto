@@ -18,6 +18,7 @@
     <table border="1" cellpadding="10">
         <thead>
             <th>ID</th>
+            <th>Foto</th>
             <th>Nome</th>
             <th>E-mail</th>
             <th>Telefone</th>
@@ -49,6 +50,7 @@
                 ?>
                 <tr>
                     <td><?= $cliente['id'] ?></td>
+                    <td><img src="<?= $cliente['foto'] ?>" width="50"></td>
                     <td><?= $cliente['nome'] ?></td>
                     <td><?= $cliente['email'] ?></td>
                     <td><?= $telefone ?></td>
