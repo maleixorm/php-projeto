@@ -84,6 +84,10 @@
                 <input type="email" name="email" id="" value="<?= $cliente['email']; ?>">
             </div>
             <div class="form-control">
+                <label for="senha">Senha: </label>
+                <input type="text" name="senha">
+            </div>
+            <div class="form-control">
                 <label for="telefone">Telefone: </label>
                 <input type="text" name="telefone" id="" value="<?= formatarTelefone($cliente['telefone']); ?>">
             </div>
@@ -91,9 +95,15 @@
                 <label for="nascimento">Data de Nascimento: </label>
                 <input type="date" name="nascimento" id="" value="<?= $cliente['nascimento']; ?>">
             </div>
+            <?php if ($cliente['foto']) { ?>
+                <div class="form-control">
+                    <label for="foto">Foto Atual: </label>
+                    <img src="<?= $cliente['foto']; ?>" width="50">
+                </div>
+            <?php } ?>
             <div class="form-control">
-                <label for="senha">Senha: </label>
-                <input type="text" name="senha">
+                <label for="foto">Nova foto do Usuário: </label>
+                <input type="file" name="foto">
             </div>
             <input type="submit" value="Atualizar">
         </form>
