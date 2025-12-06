@@ -1,6 +1,7 @@
 <?php 
     
     include('lib/conexao.php');
+    include('lib/upload.php');
     include('lib/functions.php');
 
     $id = intval($_GET['id']);
@@ -48,6 +49,16 @@
             }
         }
 
+        if (isset($_FILES['foto'])) {
+            $arq = $_FILES['foto'];
+            $path = enviarArquivo($arq['error'], $arq['size'], $arq['name'], $arq['tmp_name']);
+            if ($path == false) {
+                $erro = "Falha ao enviar o arquivo. Tente novamente!";
+            } else {
+                $sql_extra .= "foto = '$path', ";
+            }
+        }
+
         if ($erro) {
             echo "<p><b>Erro: $erro</b></p>";
         } else {
@@ -74,7 +85,7 @@
 <body>
     <main>
         <a href="clientes.php">Voltar para a lista de clientes</a>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="form-control">
                 <label for="nome">Nome: </label>
                 <input type="text" name="nome" id="" value="<?= $cliente['nome']; ?>">
