@@ -57,6 +57,9 @@
             } else {
                 $sql_extra .= "foto = '$path', ";
             }
+            if (!empty($_POST['foto_antiga'])) {
+                unlink($_POST['foto_antiga']);
+            }
         }
 
         if ($erro) {
@@ -106,6 +109,7 @@
                 <label for="nascimento">Data de Nascimento: </label>
                 <input type="date" name="nascimento" id="" value="<?= $cliente['nascimento']; ?>">
             </div>
+            <input type="hidden" name="foto_antiga" value="<?= $cliente['foto']; ?>">
             <?php if ($cliente['foto']) { ?>
                 <div class="form-control">
                     <label for="foto">Foto Atual: </label>
