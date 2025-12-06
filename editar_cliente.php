@@ -13,6 +13,17 @@
         $email = $_POST['email'];
         $telefone = $_POST['telefone'];
         $nascimento = $_POST['nascimento'];
+        $senha = $_POST['senha'];
+        $sql_extra = "";
+
+        if (!empty($senha)) {
+            if (strlen($senha) < 6 && strlen($senha) > 16) {
+                $erro = "A senha deve ter entre 6 e 16 caracteres";
+            } else {
+                $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
+                $sql_extra = "senha = '$senha_criptografada',";
+            }
+        }
 
         if(empty($nome)) {
             $erro = "Preencha o nome!";
@@ -40,7 +51,7 @@
         if ($erro) {
             echo "<p><b>Erro: $erro</b></p>";
         } else {
-            $sql = "UPDATE clientes SET nome = '$nome', email = '$email', telefone = '$telefone', nascimento = '$nascimento' WHERE id = '$id'";
+            $sql = "UPDATE clientes SET nome = '$nome', email = '$email', $sql_extra telefone = '$telefone', nascimento = '$nascimento' WHERE id = '$id'";
             $deu_certo = $mysqli->query($sql) or die($mysqli->error);
             if($deu_certo) {
                 echo "<p><b>Cliente atualizado com sucesso!</b></p>";
@@ -79,6 +90,10 @@
             <div class="form-control">
                 <label for="nascimento">Data de Nascimento: </label>
                 <input type="date" name="nascimento" id="" value="<?= $cliente['nascimento']; ?>">
+            </div>
+            <div class="form-control">
+                <label for="senha">Senha: </label>
+                <input type="text" name="senha">
             </div>
             <input type="submit" value="Atualizar">
         </form>
