@@ -2,10 +2,18 @@
     include('lib/conexao.php');
     if (isset($_POST['confirmar'])) {
         $id = intval($_GET['id']);
+
+        $sql_cliente = "SELECT foto FROM clientes WHERE id = '$id'";
+        $query_cliente = $mysqli->query($sql_cliente) or die($mysqli->error);
+        $cliente = $query_cliente->fetch_assoc();
+
         $sql = "DELETE FROM clientes WHERE id = '$id'";
         $query = $mysqli->query($sql) or die ($mysqli-> error);
 
-        if ($query) { ?>
+        if ($query) {
+            if (!empty($cliente['foto'])) {
+                unlink($cliente['foto']);
+            } ?>
             <h1>Cliente deletado com sucesso!</h1>
             <p><a href="clientes.php">Clique aqui</a> para retornar à lista de clientes</p>
         <?php 
