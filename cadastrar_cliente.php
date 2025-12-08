@@ -1,4 +1,13 @@
-<?php 
+<?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    
+    if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
+        header("Location: clientes.php");
+        die();
+    }
+
     if(count($_POST) > 0) {
 
         include('lib/conexao.php');
