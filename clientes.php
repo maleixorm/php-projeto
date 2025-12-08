@@ -10,7 +10,9 @@
         die();
     }
 
-    $sql = "SELECT * FROM clientes";
+    $id = $_SESSION['usuario'];
+
+    $sql = "SELECT * FROM clientes WHERE id != '$id'";
     $query_clientes = $mysqli->query($sql) or die($mysqli->error);
     $num_clientes = $query_clientes->num_rows;
 ?>
@@ -27,6 +29,7 @@
     <?php if ($_SESSION['admin']) { ?>
         <p><a href="cadastrar_cliente.php">Cadastrar</a></p>
     <?php } ?>
+    <p><a href="logout.php">Sair</a></p>
     <p>Estes são os usuários cadastrados no sistema:</p>
     <table border="1" cellpadding="10">
         <thead>
