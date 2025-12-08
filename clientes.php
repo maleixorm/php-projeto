@@ -19,6 +19,7 @@
     <table border="1" cellpadding="10">
         <thead>
             <th>ID</th>
+            <th>É admin?</th>
             <th>Foto</th>
             <th>Nome</th>
             <th>E-mail</th>
@@ -30,7 +31,7 @@
         <tbody>
             <?php if($num_clientes == 0) { ?>
                 <tr>
-                    <td colspan="7">Nenhum cliente cadastrado!</td>
+                    <td colspan="9">Nenhum cliente cadastrado!</td>
                 </tr>
             <?php } else { 
                 while($cliente = $query_clientes->fetch_assoc()) {
@@ -51,6 +52,7 @@
                 ?>
                 <tr>
                     <td><?= $cliente['id'] ?></td>
+                    <td><?php if($cliente['admin']) echo "Sim"; else echo "Não"; ?></td>
                     <td><img src="<?= $cliente['foto'] ?>" width="50"></td>
                     <td><?= $cliente['nome'] ?></td>
                     <td><?= $cliente['email'] ?></td>
