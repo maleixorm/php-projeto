@@ -12,6 +12,7 @@
         $telefone = $_POST['telefone'];
         $nascimento = $_POST['nascimento'];
         $senha_descriptografada = $_POST['senha'];
+        $admin = $_POST['admin'];
         
         if (strlen($senha_descriptografada) < 6 && strlen($senha_descriptografada) > 16) {
             $erro = "A senha deve ter entre 6 e 16 caracteres";
@@ -54,7 +55,8 @@
             echo "<p><b>Erro: $erro</b></p>";
         } else {
             $senha = password_hash($senha_descriptografada, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO clientes (nome, email, senha, telefone, nascimento, data, foto) VALUES ('$nome', '$email', '$senha','$telefone', '$nascimento', NOW(), '$path')";
+            $sql = "INSERT INTO clientes (nome, email, senha, telefone, nascimento, data, foto, admin) 
+                    VALUES ('$nome', '$email', '$senha','$telefone', '$nascimento', NOW(), '$path', '$admin')";
             $deu_certo = $mysqli->query($sql) or die($mysqli->error);
             if($deu_certo) {
                 enviar_email($email, "Conta criada no site.", "
@@ -106,6 +108,11 @@
             <div class="form-control">
                 <label for="foto">Foto do Usuário: </label>
                 <input type="file" name="foto">
+            </div>
+            <div class="form-control">
+                <label for="admin">Tipo de Usuário: </label>
+                <input type="radio" value="1" name="admin">Administrador
+                <input type="radio" value="0" name="admin" checked>Cliente
             </div>
             <input type="submit" value="Cadastrar">
         </form>
