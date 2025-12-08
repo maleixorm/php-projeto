@@ -10,12 +10,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Clientes</title>
+    <title>Lista de Usuários</title>
 </head>
 <body>
-    <h1>Lista de Clientes</h1>
+    <h1>Lista de Usuários</h1>
     <p><a href="cadastrar_cliente.php">Cadastrar</a></p>
-    <p>Estes são os clientes cadastrados no sistema:</p>
+    <p>Estes são os usuários cadastrados no sistema:</p>
     <table border="1" cellpadding="10">
         <thead>
             <th>ID</th>
@@ -31,7 +31,7 @@
         <tbody>
             <?php if($num_clientes == 0) { ?>
                 <tr>
-                    <td colspan="9">Nenhum cliente cadastrado!</td>
+                    <td colspan="9">Nenhum usuário cadastrado!</td>
                 </tr>
             <?php } else { 
                 while($cliente = $query_clientes->fetch_assoc()) {
