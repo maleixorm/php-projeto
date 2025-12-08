@@ -1,5 +1,15 @@
 <?php 
     include('lib/conexao.php');
+
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: index.php");
+        die();
+    }
+
     $sql = "SELECT * FROM clientes";
     $query_clientes = $mysqli->query($sql) or die($mysqli->error);
     $num_clientes = $query_clientes->num_rows;
@@ -14,7 +24,9 @@
 </head>
 <body>
     <h1>Lista de Usuários</h1>
-    <p><a href="cadastrar_cliente.php">Cadastrar</a></p>
+    <?php if ($_SESSION['admin']) { ?>
+        <p><a href="cadastrar_cliente.php">Cadastrar</a></p>
+    <?php } ?>
     <p>Estes são os usuários cadastrados no sistema:</p>
     <table border="1" cellpadding="10">
         <thead>
@@ -26,12 +38,14 @@
             <th>Telefone</th>
             <th>Data de Nascimento</th>
             <th>Data de Cadastro</th>
-            <th>Ações</th>
+            <?php if ($_SESSION['admin']) { ?>
+                <th>Ações</th>
+            <?php } ?>
         </thead>
         <tbody>
             <?php if($num_clientes == 0) { ?>
                 <tr>
-                    <td colspan="9">Nenhum usuário cadastrado!</td>
+                    <td colspan="<?php if ($_SESSION['admin']) echo 9; else echo 8; ?>">Nenhum usuário cadastrado!</td>
                 </tr>
             <?php } else { 
                 while($cliente = $query_clientes->fetch_assoc()) {
@@ -59,10 +73,12 @@
                     <td><?= $telefone ?></td>
                     <td><?= $nascimento ?></td>
                     <td><?= $data_cadastro ?></td>
-                    <td>
-                        <a href="editar_cliente.php?id=<?= $cliente['id'] ?>">Editar</a> | 
-                        <a href="deletar_cliente.php?id=<?= $cliente['id'] ?>">Deletar</a>
-                    </td>
+                    <?php if ($_SESSION['admin']) { ?>
+                        <td>
+                            <a href="editar_cliente.php?id=<?= $cliente['id'] ?>">Editar</a> | 
+                            <a href="deletar_cliente.php?id=<?= $cliente['id'] ?>">Deletar</a>
+                        </td>
+                    <?php } ?>
                 </tr>
             <?php }} ?>
         </tbody>
