@@ -16,6 +16,7 @@
         $nascimento = $_POST['nascimento'];
         $senha = $_POST['senha'];
         $sql_extra = "";
+        $admin = $_POST['admin'];
 
         if (!empty($senha)) {
             if (strlen($senha) < 6 && strlen($senha) > 16) {
@@ -65,7 +66,7 @@
         if ($erro) {
             echo "<p><b>Erro: $erro</b></p>";
         } else {
-            $sql = "UPDATE clientes SET nome = '$nome', email = '$email', $sql_extra telefone = '$telefone', nascimento = '$nascimento' WHERE id = '$id'";
+            $sql = "UPDATE clientes SET nome = '$nome', email = '$email', $sql_extra telefone = '$telefone', nascimento = '$nascimento', admin = '$admin' WHERE id = '$id'";
             $deu_certo = $mysqli->query($sql) or die($mysqli->error);
             if($deu_certo) {
                 echo "<p><b>Cliente atualizado com sucesso!</b></p>";
@@ -119,6 +120,11 @@
             <div class="form-control">
                 <label for="foto">Nova foto do Usuário: </label>
                 <input type="file" name="foto">
+            </div>
+            <div class="form-control">
+                <label for="admin">Tipo de Usuário: </label>
+                <input type="radio" value="1" name="admin">Administrador
+                <input type="radio" value="0" name="admin" checked>Cliente
             </div>
             <input type="submit" value="Atualizar">
         </form>
